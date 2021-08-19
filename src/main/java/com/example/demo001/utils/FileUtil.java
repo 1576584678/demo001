@@ -9,7 +9,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 /**
- * @author l1500
+ * @author liyuelin
  *
  */
 @Slf4j
@@ -22,6 +22,7 @@ public class FileUtil {
      * @return 成功或失败
      */
     public static boolean copyFile(String orgFile,String tagFile){
+        long startTime = System.currentTimeMillis();
         try (
                 // 创建原文件输入流
                 FileInputStream inputStream = new FileInputStream(orgFile);
@@ -49,12 +50,9 @@ public class FileUtil {
         }catch (IOException e){
             log.error(e.getLocalizedMessage());
             return false;
+        }finally {
+            log.debug("耗时："+(System.currentTimeMillis()-startTime)+"ms");
         }
     }
-    public static void main(String[] args)   {
-        String infile = "E:\\密钥\\备忘.txt";
-        String outfile = "D:\\备忘1.txt";
-        boolean flag=copyFile(infile,outfile);
-        System.out.print("文件复制"+(flag?"成功":"失败")+"!");
-    }
+
 }
